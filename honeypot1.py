@@ -11,10 +11,10 @@ from datetime import datetime
 
 # functionality:
 #   Runs while loop to accept all new clients (I set a limit of the # of attempts since my ec2 instance had limited space and I was afraid of spamming)
-#   Each client runs on their own thread --> pointless at this time since all clients try to connect/get immediatly rejected
+#   Each client runs on their own thread --> pointless at this time since all clients try to connect/get immediately rejected
 #     Store each attempt in csv format to given file 
 
-# for locking critial section (ie- reading/writing to a file )
+# for locking critical section (ie- reading/writing to a file )
 lock=_thread.allocate_lock()
 hostKey = paramiko.rsakey.RSAKey(filename='[add location of .ssh/id_rsa]')
 clientAttempts = [number of clients that are allowed to join before while loop ends]
@@ -32,7 +32,7 @@ class Server(paramiko.server.ServerInterface):
         Server.port = port
         Server.ip = ip
 
-    # checks if user can open channel w/out authenfication & records client data
+    # checks if user can open channel w/out authentication & records client data
     # for HP1, always fails
     def check_auth_none(self, username):
         # creates lock for critial section; writes to file; releases lock
@@ -78,11 +78,11 @@ class Server(paramiko.server.ServerInterface):
         return paramiko.AUTH_FAILED
 
     # determine if channel request will be granted
-    # for HP1 - shoudl never run; auth always fails before this point
+    # for HP1 - should never run; auth always fails before this point
     def check_channel_request(self, kind, chanid):
         return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
 
-    # returns authernication methods supported by server
+    # returns authenication methods supported by server
     def get_allowed_auths(self, username):
         return 'none, password, publickey'
 
@@ -91,7 +91,7 @@ class Server(paramiko.server.ServerInterface):
 # creates new transport/server for every connection
 # allows multiple connections at the same time
 def clientConnects(conn, ip, port, connectedClients): 
-    # creates lock for critial section; writes to file; releases lock
+    # creates lock for critical section; writes to file; releases lock
     # in theory; every client that tries to connect will have 2 entries; client that just runs nmap will have 1
     lock.acquire()         
     with open(csvFileLocation, mode='a+') as csv_file:   

@@ -18,7 +18,7 @@ from datetime import datetime
 # The reason for the threading change was because in the HP1, the variables client ID, ip, port, etc, were all treated as global variables- so whenever a new client joined, it would change that variable for everyone. So not ideal for logging purposes. 
 
 
-# for locking critial section
+# for locking critical section
 lock=_thread.allocate_lock()
 
 hostKey = paramiko.rsakey.RSAKey(filename='[add location of .ssh/id_rsa]')
@@ -26,7 +26,7 @@ clientAttempts = [number of clients that are allowed to join before while loop e
 csvFileLocation = [location of where to write all logging information]
 
 
-# implements InteractiveQuery (for promts/session look) and ServerInterface(for authentication)
+# implements InteractiveQuery (for prompts/session look) and ServerInterface(for authentication)
 # auth_none/publickey not used in HP2; only need to re-implement the password authorization
 class Server(paramiko.server.ServerInterface):
     # used for writing to a csv file
@@ -82,7 +82,7 @@ class Server(paramiko.server.ServerInterface):
         return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
         #return paramiko.OPEN_SUCCEEDED
 
-    # returns authernication methods supported by server
+    # returns authentication methods supported by server
     # HP 2 --> password
     def get_allowed_auths(self, username):
         return 'password'
@@ -133,7 +133,7 @@ class NewThread(threading.Thread):
 
 
 def startSocket():
-    # creates localhost socket on port 65432
+    # creates localhost socket on port 22
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     
@@ -141,7 +141,7 @@ def startSocket():
     sock.bind((hostIP, 22))
     sock.listen(5)
     
-    # runs socket on a loop until 5 clients have connected; everytime one connects, creates new thread --> no backlog
+    # runs socket on a loop until clientAttempts clients have connected
     connectedClients = 0
     while(connectedClients < clientAttempts):
         conn, addr = sock.accept()

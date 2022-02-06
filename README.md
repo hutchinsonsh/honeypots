@@ -7,6 +7,10 @@ Overall: Each honeypot is designed to mimic an actual ssh server(by this, I mean
 These honeypots were run on ec2 amazon instances for 48-72 hrs
 
 ___________
+**Disclaimer:**
+I am not a cyber security expert- this was an ill-advised passion project more than anything else. Setting up a honeypot is asking for trouble and I would highly suggest doing your own research before hosting one. When I ran these honeypots, I set up an ec2 instance(to avoid using my own network), collected and viewed all data in a sandbox, and only ran the ec2 instance for a limited amount of time- making sure I shut down each instance between use. 
+
+___________
 **Honeypot 1**: 
   This is the most basic honeypot. It denies all connections. 
   
@@ -28,4 +32,4 @@ ___________
  
   Information it collects: IP address, username, date/time, passwords, commands attempted
   
-  Results: I haven't ran it yet
+  Results: I haven't ran it yet(other than on my localhost w/ only myself having access to it. So it works, I'm just cautious about the security risks)
